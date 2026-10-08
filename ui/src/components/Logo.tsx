@@ -25,17 +25,17 @@ export function Logo({ size = 32 }: { size?: number }) {
         fill="none"
       />
       {/* Anvil spark accent */}
-      <circle cx="32" cy="14" r="1.5" fill="#FFD699" opacity="0.8" />
-      <circle cx="34" cy="12" r="1" fill="#FFD699" opacity="0.5" />
+      <circle cx="32" cy="14" r="1.5" fill="#90E0EF" opacity="0.9" />
+      <circle cx="34" cy="12" r="1" fill="#90E0EF" opacity="0.6" />
       <defs>
         <linearGradient id="ferrumShieldGrad" x1="6" y1="4" x2="42" y2="46">
-          <stop offset="0%" stopColor="#F0A54B" />
-          <stop offset="50%" stopColor="#C06B1D" />
-          <stop offset="100%" stopColor="#8B4513" />
+          <stop offset="0%" stopColor="#00B4D8" />
+          <stop offset="50%" stopColor="#0077B6" />
+          <stop offset="100%" stopColor="#03045E" />
         </linearGradient>
         <linearGradient id="ferrumShieldStroke" x1="6" y1="4" x2="42" y2="46">
-          <stop offset="0%" stopColor="#FFD699" stopOpacity="0.6" />
-          <stop offset="100%" stopColor="#8B4513" stopOpacity="0.3" />
+          <stop offset="0%" stopColor="#90E0EF" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="#0077B6" stopOpacity="0.4" />
         </linearGradient>
       </defs>
     </svg>
