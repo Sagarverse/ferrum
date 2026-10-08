@@ -14,7 +14,7 @@
     "preview": "vite preview"
   },
   "build": {
-    "appId": "com.metallicmind.app",
+    "appId": "com.ferrum.app",
     "productName": "Ferrum",
     "mac": {
       "category": "public.app-category.utilities",

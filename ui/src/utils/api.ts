@@ -1,12 +1,11 @@
 /** API service — talks to the real Ferrum Rust backend. */
 
-const USE_IPC = typeof window !== 'undefined'
-  && (window as any).metallic
-  && typeof (window as any).metallic.api === 'function';
+const bridge = typeof window !== 'undefined' ? (window.ferrum || window.metallic) : undefined;
+const USE_IPC = Boolean(bridge && typeof bridge.api === 'function');
 
 async function request<T>(method: string, path: string, body?: any): Promise<T> {
-  if (USE_IPC) {
-    return (window as any).metallic.api(method, path, body);
+  if (USE_IPC && bridge) {
+    return bridge.api(method, path, body);
   }
   const opts: RequestInit = {
     method,
@@ -185,8 +184,8 @@ export type EngineEventHandler = (payload: { event: string; data: any }) => void
 
 export async function subscribeEvents(handler: EngineEventHandler): Promise<() => void> {
   // Electron / packaged: use the IPC bridge so we go through preload.
-  if (typeof window !== 'undefined' && (window as any).metallic?.subscribeEvents) {
-    return (window as any).metallic.subscribeEvents({ onEvent: handler });
+  if (bridge?.subscribeEvents) {
+    return bridge.subscribeEvents({ onEvent: handler });
   }
   // Plain browser dev: fall back to EventSource pointing at the daemon.
   const url = 'http://127.0.0.1:19270/api/events/stream';

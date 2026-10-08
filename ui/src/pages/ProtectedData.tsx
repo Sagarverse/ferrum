@@ -50,15 +50,17 @@ export function ProtectedData() {
   }, []);
 
   const browseFolder = async () => {
-    if (window.metallic?.selectFolder) {
-      const folder = await window.metallic.selectFolder();
+    const bridge = window.ferrum || window.metallic;
+    if (bridge?.selectFolder) {
+      const folder = await bridge.selectFolder();
       if (folder) setAddPath(folder);
     }
   };
 
   const browseFile = async () => {
-    if (window.metallic?.selectFile) {
-      const file = await window.metallic.selectFile();
+    const bridge = window.ferrum || window.metallic;
+    if (bridge?.selectFile) {
+      const file = await bridge.selectFile();
       if (file) setAddPath(file);
     }
   };
@@ -227,7 +229,7 @@ export function ProtectedData() {
               autoFocus
               disabled={adding}
             />
-            {window.metallic && (
+            {(window.ferrum || window.metallic) && (
               <div style={{ display: 'flex', gap: 'var(--mm-2)' }}>
                 <button className="btn btn-secondary" onClick={browseFolder}>
                   <FolderOpen size={13} /> Folder

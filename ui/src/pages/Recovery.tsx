@@ -74,8 +74,9 @@ export function Recovery() {
   };
 
   const browseDest = async () => {
-    if (window.metallic?.selectFolder) {
-      const folder = await window.metallic.selectFolder();
+    const bridge = window.ferrum || window.metallic;
+    if (bridge?.selectFolder) {
+      const folder = await bridge.selectFolder();
       if (folder) setDest(folder);
     }
   };
@@ -215,7 +216,7 @@ export function Recovery() {
               style={{ flex: 1 }}
               placeholder="/path/to/restore"
             />
-            {window.metallic && (
+            {(window.ferrum || window.metallic) && (
               <button className="btn btn-secondary" onClick={browseDest}>
                 <FolderOpen size={13} /> Browse
               </button>

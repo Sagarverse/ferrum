@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('metallic', {
+const bridge = {
   selectFolder: () => ipcRenderer.invoke('select-folder'),
   selectFile: () => ipcRenderer.invoke('select-file'),
   getPlatform: () => ipcRenderer.invoke('get-platform'),
@@ -32,4 +32,7 @@ contextBridge.exposeInMainWorld('metallic', {
       };
     });
   },
-});
+};
+
+contextBridge.exposeInMainWorld('ferrum', bridge);
+contextBridge.exposeInMainWorld('metallic', bridge);

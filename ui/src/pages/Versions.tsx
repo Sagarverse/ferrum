@@ -51,8 +51,9 @@ export function Versions() {
     let dest = navigator.platform.includes('Win') ? 'C:\\Restored' : '/Users/sagarm/Restored';
     
     // Use native Electron folder picker instead of blocked window.prompt()
-    if (window.metallic?.selectFolder) {
-      const selected = await window.metallic.selectFolder();
+    const bridge = window.ferrum || window.metallic;
+    if (bridge?.selectFolder) {
+      const selected = await bridge.selectFolder();
       if (!selected) return; // User cancelled
       dest = selected;
     } else {

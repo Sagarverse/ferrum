@@ -63,7 +63,7 @@ impl ReplicaManager {
         }
 
         // Check if we can write
-        let test_file = path.join(".metallic_health_check");
+        let test_file = path.join(".ferrum_health_check");
         match std::fs::write(&test_file, b"health_check") {
             Ok(_) => {
                 let _ = std::fs::remove_file(&test_file);
