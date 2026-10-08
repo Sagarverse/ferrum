@@ -51,31 +51,46 @@
 
 ## 🏗️ Architecture Overview
 
-```
-                        ┌─────────────────────────────────────┐
-                        │    Electron + React Desktop UI      │
-                        │    (Amber/Gunmetal Design System)   │
-                        └──────────────────┬──────────────────┘
-                                           │
-                                  IPC Preload Bridge
-                                  / REST API (:19270)
-                                           │
-                        ┌──────────────────▼──────────────────┐
-                        │        Rust Backend Engine          │
-                        │   (Axum HTTP + Tokio Async Core)    │
-                        └───┬────────┬────────┬────────┬──────┘
-                            │        │        │        │
-                   ┌────────▼┐  ┌────▼───┐ ┌──▼───┐ ┌──▼─────────┐
-                   │Watcher  │  │Crypto  │ │SQLite│ │ Security   │
-                   │Module   │  │AES-GCM │ │DB    │ │ Monitor    │
-                   └─────────┘  └────────┘ └──────┘ └────────────┘
-                        │            │                  │
-                        └────────────┼──────────────────┘
-                                     │
-                        ┌────────────▼────────────────┐
-                        │     Backup Repositories     │
-                        │  Local · External · Cloud   │
-                        └─────────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph Client ["💻 User Desktop Interface"]
+        UI["Electron + React UI<br/>(Amber & Gunmetal Theme)"]
+        Tray["macOS Menu Bar Tray"]
+        AI["Natural Language AI Assistant"]
+    end
+
+    subgraph IPC ["🔌 IPC & Network Layer"]
+        Bridge["Electron Preload IPC Bridge"]
+        API["Axum REST API & SSE Stream (:19270)"]
+    end
+
+    subgraph Core ["⚒️ Rust Core Daemon Engine"]
+        Engine["Sync & Event Orchestrator"]
+        Watcher["File System Watcher & Debouncer"]
+        Crypto["AES-256-GCM & CDC Chunking Engine"]
+        SecMon["Heuristic Ransomware Security Monitor"]
+        MetaDB[("SQLite Metadata Store")]
+    end
+
+    subgraph Storage ["💾 Multi-Target Backup Repositories"]
+        LocalRepo["Local Disk Repository"]
+        ExternalRepo["External Drive / NAS"]
+        CloudRepo["Google Drive / Cloud Folder"]
+    end
+
+    UI <--> Bridge
+    Tray <--> Bridge
+    AI <--> Bridge
+    Bridge <--> API
+    API <--> Engine
+
+    Watcher -->|File Changes| Engine
+    Engine --> SecMon
+    Engine --> Crypto
+    Engine <--> MetaDB
+    Crypto -->|Encrypted Chunks| LocalRepo
+    Crypto -->|Replicated Chunks| ExternalRepo
+    Crypto -->|Synced Chunks| CloudRepo
 ```
 
 ---
