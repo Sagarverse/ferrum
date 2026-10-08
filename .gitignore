@@ -1,0 +1,16 @@
+# Node / Electron
+node_modules/
+dist/
+ui/dist/
+ui/node_modules/
+
+# Rust / Cargo
+target/
+core/target/
+**/*.rs.bk
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+*.log
