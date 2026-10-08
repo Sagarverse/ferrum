@@ -1,69 +1,91 @@
-# ⚒️ Ferrum
+<div align="center">
 
-> **Iron-Forged, Zero-Trust Continuous Data Protection & Automated Recovery Engine**
+# ⚒️ FERRUM
 
-![Ferrum](https://img.shields.io/badge/Ferrum-Iron_Forged-E8913A?style=for-the-badge&logoColor=white)
-![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
-![Electron](https://img.shields.io/badge/Electron-47848F?style=for-the-badge&logo=electron&logoColor=white)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![License](https://img.shields.io/badge/License-MIT-E8913A?style=for-the-badge)
+### **Iron-Forged, Zero-Trust Continuous Data Protection & Automated Recovery Engine**
 
-**Ferrum** (Latin for *iron*) is an enterprise-grade, lightweight data protection platform built in Rust — providing real-time file system monitoring, AES-256-GCM chunked encryption, deduplication, multi-target backup repository routing (including Google Drive folder integration), anti-ransomware protection, and instantaneous version recovery.
+[![Ferrum](https://img.shields.io/badge/Ferrum-v0.1.0-E8913A?style=for-the-badge&logoColor=white)](https://github.com/Sagarverse/ferrum)
+[![Rust](https://img.shields.io/badge/Rust-Core_Daemon-000000?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
+[![Electron](https://img.shields.io/badge/Electron-v36.3-47848F?style=for-the-badge&logo=electron&logoColor=white)](https://www.electronjs.org/)
+[![React](https://img.shields.io/badge/React-v18.3-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![License](https://img.shields.io/badge/License-MIT-E8913A?style=for-the-badge)](LICENSE)
 
-> *Iron rusts. Ferrum doesn't.* 🔥
+*Iron rusts. Ferrum doesn't.* 🔥
+
+---
+
+[Key Features](#-key-features) • [Architecture](#%EF%B8%8F-architecture-overview) • [Quick Start](#-quick-start) • [Security & Encryption](#-security--encryption) • [API Reference](#-api-endpoints) • [Tech Stack](#-tech-stack)
+
+</div>
+
+---
+
+## 🌟 Executive Summary
+
+**Ferrum** (Latin for *iron*) is a high-performance, real-time continuous data protection (CDP) engine built in **Rust** with an **Electron + React** desktop interface. Designed with zero-trust security principles, Ferrum delivers sub-millisecond file change detection, content-defined chunking (CDC), AES-256-GCM encryption, automatic deduplication, multi-target storage replication (including cloud/Google Drive targets), and proactive ransomware anomaly detection.
 
 ---
 
 ## ✨ Key Features
 
-- **⚒️ Dual-Engine Architecture**: High-performance **Rust Core Daemon** (`Axum` + `Tokio`) paired with a sleek **Electron + React** desktop UI.
-- **🛡️ Real-Time File System Watcher**: Continuously monitors protected directories for file changes, creations, and deletions with debounced batch processing.
-- **⚡ Dynamic Repository Routing & Customization**:
-  - Assign specific backup repositories to individual folders.
-  - Full toggle controls to turn repositories ON/OFF.
-  - External repository support (e.g. Google Drive synced folders, external drives, NAS).
-- **🔒 Zero-Trust Encryption & Deduplication**:
-  - Content-defined chunking with SHA-256 manifest verification.
-  - AES-256-GCM data encryption at rest.
-  - Automatic cross-file chunk deduplication to optimize storage usage.
-- **🗑️ Smart Deletion & Sync**: Synchronized data removal — deleting a protected file cleans up corresponding backups while maintaining version history integrity.
-- **💻 macOS Menu Bar & Background Execution**: Minimizes directly into the macOS status bar for uninterrupted background file protection.
-- **🤖 Built-in AI Assistant**: Interactive assistant for executing backup policies, querying protection status, and managing files via natural language.
+- **⚒️ High-Performance Dual Engine**:
+  - **Rust Daemon**: Multi-threaded `Axum` + `Tokio` backend managing event streams, cryptographic operations, SQLite metadata, and file watcher events.
+  - **Electron + React UI**: Custom glassmorphism UI with real-time SSE telemetry, interactive charts, and system status indicators.
+- **🛡️ Real-Time Continuous Data Protection (CDP)**:
+  - Low-overhead filesystem watcher monitors target directories for creates, edits, moves, and deletes with debounced batch processing.
+- **🔒 Zero-Trust Cryptographic Engine**:
+  - **AES-256-GCM** encryption at rest for all backup chunks.
+  - **Content-Defined Chunking (CDC)** with SHA-256 cryptographic digest verification.
+  - Cross-file deduplication to minimize storage footprint across versions.
+- **⚡ Flexible Repository Replication**:
+  - Route backups to local drives, external storage, NAS, or cloud-synced folders (e.g. Google Drive, OneDrive).
+  - Per-repository ON/OFF toggles and health check verification.
+- **☣️ Heuristic Ransomware Protection**:
+  - Real-time entropy analysis and rapid-change detection to identify suspicious file encryption patterns before corruption spreads.
+- **💻 macOS Menu Bar & Silent Background Operation**:
+  - Runs unobtrusively in the macOS status bar (`trayTemplate`), continuing background protection even when the window is closed.
+- **🤖 Natural Language AI Assistant**:
+  - Built-in assistant capable of executing backup rules, inspecting system health, and answering queries in plain language.
 
 ---
 
 ## 🏗️ Architecture Overview
 
 ```
-                    ┌──────────────────────────────┐
-                    │   Electron + React Desktop   │
-                    │   (IPC Bridge / REST API)     │
-                    └──────────────┬───────────────┘
-                                   │
-                    ┌──────────────▼───────────────┐
-                    │   Rust Core Engine (:19270)   │
-                    │   Axum HTTP + Tokio Runtime   │
-                    └──┬──────┬──────┬──────┬──────┘
-                       │      │      │      │
-                  ┌────▼─┐ ┌─▼────┐ ┌▼────┐ ┌▼─────────┐
-                  │Watch │ │Crypt │ │ DB  │ │ Security │
-                  │FS    │ │AES   │ │SQLite│ │ Monitor  │
-                  └──────┘ └──────┘ └─────┘ └──────────┘
-                                │
-                  ┌─────────────▼────────────────┐
-                  │   Backup Repositories        │
-                  │   Local · NAS · Google Drive  │
-                  └──────────────────────────────┘
+                        ┌─────────────────────────────────────┐
+                        │    Electron + React Desktop UI      │
+                        │    (Amber/Gunmetal Design System)   │
+                        └──────────────────┬──────────────────┘
+                                           │
+                                  IPC Preload Bridge
+                                  / REST API (:19270)
+                                           │
+                        ┌──────────────────▼──────────────────┐
+                        │        Rust Backend Engine          │
+                        │   (Axum HTTP + Tokio Async Core)    │
+                        └───┬────────┬────────┬────────┬──────┘
+                            │        │        │        │
+                   ┌────────▼┐  ┌────▼───┐ ┌──▼───┐ ┌──▼─────────┐
+                   │Watcher  │  │Crypto  │ │SQLite│ │ Security   │
+                   │Module   │  │AES-GCM │ │DB    │ │ Monitor    │
+                   └─────────┘  └────────┘ └──────┘ └────────────┘
+                        │            │                  │
+                        └────────────┼──────────────────┘
+                                     │
+                        ┌────────────▼────────────────┐
+                        │     Backup Repositories     │
+                        │  Local · External · Cloud   │
+                        └─────────────────────────────┘
 ```
 
 ---
 
-## 🛠️ Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- **Node.js** (v18+) & `npm`
-- **Rust** (Cargo 1.70+)
+- **Node.js** (v18 or higher) & `npm`
+- **Rust Toolchain** (`cargo` 1.70+)
 
 ### 1. Clone the Repository
 
@@ -72,14 +94,14 @@ git clone https://github.com/Sagarverse/ferrum.git
 cd ferrum
 ```
 
-### 2. Build the Rust Backend Core
+### 2. Build the Core Engine (Rust)
 
 ```bash
 cd core
 cargo build --release
 ```
 
-### 3. Install & Run the Desktop App
+### 3. Launch the Application (Electron + Vite)
 
 ```bash
 cd ../ui
@@ -89,37 +111,57 @@ npm run app
 
 ---
 
-## 📖 Usage Guide
+## 🔒 Security & Encryption
 
-| Action | How |
-|--------|-----|
-| **Protect a folder** | Navigate to **Protected Data** → click **+ Add Folder** |
-| **Configure repositories** | Go to **Storage** → manage local, NAS, or Google Drive targets |
-| **Background mode** | Close the window — Ferrum runs silently from the macOS menu bar |
-| **Restore files** | Access **Versions & Recovery** for point-in-time restores |
-| **AI commands** | Use the **Assistant** — try "protect my Documents folder" |
+Ferrum treats data protection as an absolute zero-trust operation:
+
+1. **Chunking & Hashing**: Incoming files are split into variable-sized chunks. Each chunk is hashed using SHA-256 to generate a unique content identifier.
+2. **Deduplication**: If a chunk hash already exists in storage, only the reference metadata is updated, preventing duplicate storage consumption.
+3. **AES-256-GCM Encryption**: Each chunk is encrypted with AES-256-GCM using authenticated encryption before writing to disk.
+4. **Verifiable Restore**: Restores check SHA-256 hashes against original manifests to guarantee 100% data integrity before writing restored files.
+
+---
+
+## 📡 API Endpoints
+
+The Rust engine exposes an internal HTTP API (`http://127.0.0.1:19270`) used by the desktop app and available for CLI integrations:
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/health` | System health check and memory metrics |
+| `GET` | `/api/protected` | List monitored protected paths |
+| `POST` | `/api/protected` | Add a new folder or file to real-time protection |
+| `GET` | `/api/events/stream` | Server-Sent Events (SSE) telemetry stream |
+| `GET` | `/api/versions` | List available point-in-time snapshot versions |
+| `POST` | `/api/restore` | Trigger point-in-time file recovery |
+| `GET` | `/api/replicas` | Retrieve backup repository health and configuration |
 
 ---
 
 ## 🧰 Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Core Engine | Rust, Axum, Tokio, SQLite |
-| Encryption | AES-256-GCM, SHA-256 |
-| Desktop UI | Electron, React, TypeScript |
-| Styling | Custom CSS Design System |
-| Build | Cargo, Vite, npm |
+| Component | Technology | Purpose |
+|-----------|------------|---------|
+| **Core Engine** | Rust 2021 Edition | High performance, memory safety, concurrency |
+| **Web Server** | Axum & Tokio | Async REST API & SSE streaming |
+| **Database** | SQLite & Rusqlite | Transactional metadata & manifest storage |
+| **Cryptography** | `aes-gcm`, `sha2`, `blake3` | Encrypted at-rest chunk storage & verification |
+| **Desktop Shell**| Electron v36 | Cross-platform desktop lifecycle & tray integration |
+| **Frontend UI** | React 18 & TypeScript | Reactive state management & component hierarchy |
+| **Build System**| Vite & Cargo | Fast hot-reloading development & optimized release binaries |
 
 ---
 
 ## 📄 License
 
-Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
+Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for complete terms.
 
 ---
 
-<p align="center">
-  <strong>Iron rusts. Ferrum doesn't.</strong><br/>
-  Made with ⚒️ by <a href="https://github.com/Sagarverse">Sagarverse</a>
-</p>
+<div align="center">
+
+**Iron rusts. Ferrum doesn't.**
+
+Designed & Developed with ⚒️ by **[Sagarverse](https://github.com/Sagarverse)**
+
+</div>
