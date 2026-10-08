@@ -3,16 +3,16 @@
 /// Get the platform data directory
 pub fn get_data_dir() -> anyhow::Result<std::path::PathBuf> {
     let dir = dirs::data_local_dir()
-        .map(|d| d.join("MetallicMini"))
-        .unwrap_or_else(|| std::path::PathBuf::from("./metallic-mini-data"));
+        .map(|d| d.join("Ferrum"))
+        .unwrap_or_else(|| std::path::PathBuf::from("./ferrum-data"));
     Ok(dir)
 }
 
 /// Get the platform config directory
 pub fn get_config_dir() -> anyhow::Result<std::path::PathBuf> {
     let dir = dirs::config_dir()
-        .map(|d| d.join("MetallicMini"))
-        .unwrap_or_else(|| std::path::PathBuf::from("./metallic-mini-config"));
+        .map(|d| d.join("Ferrum"))
+        .unwrap_or_else(|| std::path::PathBuf::from("./ferrum-config"));
     Ok(dir)
 }
 

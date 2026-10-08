@@ -1,37 +1,37 @@
 /* ═══════════════════════════════════════════════════════════
-   METALLIC MIND — Enterprise Design System v3
-   Premium glassmorphism + gradient design language
+   FERRUM — Iron-Forged Data Protection Design System
+   Warm amber · Gunmetal depth · Copper accents
    ═══════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 /* ─── Foundation Tokens ─────────────────────────────────── */
 :root {
-  /* Core Brand — rich cyan gradient */
-  --mm-brand: #00B4D8;
-  --mm-brand-hover: #0096B7;
-  --mm-brand-light: rgba(0, 180, 216, 0.08);
-  --mm-brand-glow: rgba(0, 180, 216, 0.15);
-  --mm-brand-gradient: linear-gradient(135deg, #00B4D8 0%, #0077B6 100%);
+  /* Core Brand — warm amber/copper gradient (iron-forged) */
+  --mm-brand: #E8913A;
+  --mm-brand-hover: #D4791F;
+  --mm-brand-light: rgba(232, 145, 58, 0.08);
+  --mm-brand-glow: rgba(232, 145, 58, 0.15);
+  --mm-brand-gradient: linear-gradient(135deg, #F0A54B 0%, #C06B1D 50%, #8B4513 100%);
 
-  /* Backgrounds — deeper layered depth */
-  --mm-bg-app: #080C14;
-  --mm-bg-surface: #0F1520;
-  --mm-bg-elevated: #161D2A;
-  --mm-bg-hover: #1C2535;
-  --mm-bg-active: #222D40;
-  --mm-bg-input: #0A0F18;
+  /* Backgrounds — deep gunmetal/forge layers */
+  --mm-bg-app: #0A0B0E;
+  --mm-bg-surface: #111318;
+  --mm-bg-elevated: #181B22;
+  --mm-bg-hover: #1F222C;
+  --mm-bg-active: #262A36;
+  --mm-bg-input: #0C0D11;
 
   /* Text hierarchy */
-  --mm-text: #E8EDF5;
-  --mm-text-secondary: #8B95A8;
-  --mm-text-muted: #4A5568;
-  --mm-text-link: #58A6FF;
+  --mm-text: #E8E4DF;
+  --mm-text-secondary: #9B917F;
+  --mm-text-muted: #564E42;
+  --mm-text-link: #F0A54B;
 
-  /* Borders — subtle glow capable */
-  --mm-border: rgba(255,255,255,0.06);
-  --mm-border-active: rgba(0, 180, 216, 0.5);
-  --mm-border-subtle: rgba(255,255,255,0.03);
+  /* Borders — warm subtle glow */
+  --mm-border: rgba(232, 145, 58, 0.06);
+  --mm-border-active: rgba(232, 145, 58, 0.5);
+  --mm-border-subtle: rgba(255, 255, 255, 0.03);
 
   /* Status palette */
   --mm-green: #34D399;
@@ -40,10 +40,10 @@
   --mm-yellow-bg: rgba(251, 191, 36, 0.08);
   --mm-red: #F87171;
   --mm-red-bg: rgba(248, 113, 113, 0.08);
-  --mm-blue: #60A5FA;
-  --mm-blue-bg: rgba(96, 165, 250, 0.08);
-  --mm-purple: #A78BFA;
-  --mm-orange: #FB923C;
+  --mm-blue: #F0A54B;
+  --mm-blue-bg: rgba(240, 165, 75, 0.08);
+  --mm-purple: #C49A6C;
+  --mm-orange: #E8913A;
 
   /* Typography */
   --mm-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
@@ -76,11 +76,11 @@
   --mm-radius-xl: 16px;
   --mm-radius-full: 100px;
 
-  /* Shadows — layered depth */
+  /* Shadows — warm amber glow depth */
   --mm-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
   --mm-shadow-lg: 0 8px 24px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3);
   --mm-shadow-xl: 0 16px 48px rgba(0,0,0,0.5);
-  --mm-shadow-glow: 0 0 20px rgba(0, 180, 216, 0.15);
+  --mm-shadow-glow: 0 0 20px rgba(232, 145, 58, 0.12);
 
   /* Motion */
   --mm-ease: cubic-bezier(0.25, 0.1, 0.25, 1);

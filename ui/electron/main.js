@@ -18,14 +18,14 @@ function resolveRustBinary() {
     // In dev: use the debug binary the developer just built.
     // Prefer release if it exists, fall back to debug.
     const coreDir = path.resolve(__dirname, '..', '..', 'core');
-    const releasePath = path.join(coreDir, 'target', 'release', 'metallic-mini');
-    const debugPath = path.join(coreDir, 'target', 'debug', 'metallic-mini');
+    const releasePath = path.join(coreDir, 'target', 'release', 'ferrum');
+    const debugPath = path.join(coreDir, 'target', 'debug', 'ferrum');
     if (fs.existsSync(releasePath)) return releasePath;
     if (fs.existsSync(debugPath)) return debugPath;
     return null;
   }
   // Production: look in extraResources
-  const binaryName = process.platform === 'win32' ? 'metallic-mini.exe' : 'metallic-mini';
+  const binaryName = process.platform === 'win32' ? 'ferrum.exe' : 'ferrum';
   return path.join(process.resourcesPath, 'bin', binaryName);
 }
 
@@ -54,19 +54,19 @@ function startRustBackend() {
   const binaryPath = resolveRustBinary();
   if (!binaryPath) {
     dialog.showErrorBox(
-      'Metallic Mini — Backend Not Found',
+      'Ferrum — Backend Not Found',
       `Could not find the Rust backend binary. Build it first:\n\n` +
         `  cd core && cargo build --release\n\n` +
-        `Expected at:\n  core/target/release/metallic-mini`
+        `Expected at:\n  core/target/release/ferrum`
     );
-    console.error('[Metallic Mini] No backend binary found.');
+    console.error('[Ferrum] No backend binary found.');
     return;
   }
 
-  console.log('[Metallic Mini] Starting backend:', binaryPath);
+  console.log('[Ferrum] Starting backend:', binaryPath);
 
   rustBackend = spawn(binaryPath, [], {
-    env: { ...process.env, RUST_LOG: process.env.RUST_LOG || 'metallic_mini=info,tower_http=info' },
+    env: { ...process.env, RUST_LOG: process.env.RUST_LOG || 'ferrum=info,tower_http=info' },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
 
@@ -81,7 +81,7 @@ function startRustBackend() {
   rustBackend.on('error', (err) => {
     console.error('[Backend] Failed to start:', err);
     dialog.showErrorBox(
-      'Metallic Mini — Backend Error',
+      'Ferrum — Backend Error',
       `Failed to start the protection engine: ${err.message}`
     );
   });
@@ -93,7 +93,7 @@ function startRustBackend() {
 
 function stopRustBackend() {
   if (rustBackend) {
-    console.log('[Metallic Mini] Stopping backend...');
+    console.log('[Ferrum] Stopping backend...');
     rustBackend.kill('SIGTERM');
     rustBackend = null;
   }
@@ -109,7 +109,7 @@ function createWindow() {
     minHeight: 600,
     titleBarStyle: 'hiddenInset', // Native macOS traffic lights
     trafficLightPosition: { x: 16, y: 16 },
-    backgroundColor: '#0D1117',
+    backgroundColor: '#0A0B0E',
     show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -164,8 +164,8 @@ app.whenReady().then(async () => {
 
   // Don't block UI on the backend; the UI shows "Engine offline" until it's up.
   waitForBackend().then((ok) => {
-    if (ok) console.log('[Metallic Mini] Backend is online.');
-    else console.warn('[Metallic Mini] Backend did not become ready in time.');
+    if (ok) console.log('[Ferrum] Backend is online.');
+    else console.warn('[Ferrum] Backend did not become ready in time.');
   });
 
   createWindow();
@@ -185,7 +185,7 @@ app.whenReady().then(async () => {
   iconCanvas.setTemplateImage(true);
   
   tray = new Tray(iconCanvas);
-  tray.setToolTip('Metallic Mini - Protection Active');
+  tray.setToolTip('Ferrum - Protection Active');
   
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Open Dashboard', click: () => {
@@ -195,7 +195,7 @@ app.whenReady().then(async () => {
       } 
     },
     { type: 'separator' },
-    { label: 'Quit Metallic Mini', click: () => {
+    { label: 'Quit Ferrum', click: () => {
         app.isQuitting = true;
         app.quit();
       } 
@@ -246,7 +246,7 @@ ipcMain.handle('select-file', async () => {
 ipcMain.handle('get-platform', () => process.platform);
 
 ipcMain.handle('open-data-dir', async () => {
-  const dataDir = path.join(app.getPath('userData'), 'MetallicMini');
+  const dataDir = path.join(app.getPath('userData'), 'Ferrum');
   await fs.promises.mkdir(dataDir, { recursive: true });
   shell.openPath(dataDir);
   return dataDir;

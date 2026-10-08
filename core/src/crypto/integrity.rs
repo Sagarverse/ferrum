@@ -1,6 +1,6 @@
 //! BLAKE3-based integrity verification and content hashing.
 //!
-//! All content identification in Metallic Mini uses BLAKE3 for:
+//! All content identification in Ferrum uses BLAKE3 for:
 //! - Chunk identification (content-addressable storage)
 //! - File integrity verification
 //! - Manifest integrity
@@ -95,7 +95,7 @@ mod tests {
 
     #[test]
     fn test_hash_bytes() {
-        let data = b"Hello, Metallic Mini!";
+        let data = b"Hello, Ferrum!";
         let hash = hash_bytes(data);
         assert_eq!(hash.len(), 64); // BLAKE3 produces 256-bit (32-byte) hashes = 64 hex chars
 

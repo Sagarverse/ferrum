@@ -1,4 +1,4 @@
-# Metallic Mini Architecture & Development Guide
+# Ferrum Architecture & Development Guide
 
 ## Project Structure
 

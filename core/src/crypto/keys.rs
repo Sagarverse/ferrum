@@ -219,7 +219,7 @@ mod tests {
     #[test]
     fn test_encrypt_decrypt_aes256gcm() {
         let key = EncryptionKey::generate();
-        let plaintext = b"Hello, Metallic Mini! This is sensitive data.";
+        let plaintext = b"Hello, Ferrum! This is sensitive data.";
 
         let encrypted = encrypt_aes256gcm(&key, plaintext).unwrap();
         assert_ne!(encrypted, plaintext);

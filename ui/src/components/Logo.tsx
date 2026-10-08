@@ -1,4 +1,4 @@
-/** Metallic Mini enterprise SVG logo */
+/** Ferrum — Iron-forged shield SVG logo */
 export function Logo({ size = 32 }: { size?: number }) {
   return (
     <svg
@@ -8,36 +8,34 @@ export function Logo({ size = 32 }: { size?: number }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Shield shape */}
+      {/* Shield shape — iron gradient */}
       <path
         d="M24 4L6 12V22C6 33.1 13.8 43.1 24 46C34.2 43.1 42 33.1 42 22V12L24 4Z"
-        fill="url(#shieldGrad)"
-        stroke="url(#shieldStroke)"
+        fill="url(#ferrumShieldGrad)"
+        stroke="url(#ferrumShieldStroke)"
         strokeWidth="1.5"
       />
-      {/* M letterform */}
+      {/* F letterform — iron brand */}
       <path
-        d="M15 32V18L24 26L33 18V32"
-        stroke="#fff"
-        strokeWidth="2.5"
+        d="M18 16H30M18 16V34M18 24H28"
+        stroke="#FFF"
+        strokeWidth="2.8"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
       />
-      {/* Center diamond accent */}
-      <path
-        d="M24 20L27 24L24 28L21 24Z"
-        fill="#fff"
-        opacity="0.9"
-      />
+      {/* Anvil spark accent */}
+      <circle cx="32" cy="14" r="1.5" fill="#FFD699" opacity="0.8" />
+      <circle cx="34" cy="12" r="1" fill="#FFD699" opacity="0.5" />
       <defs>
-        <linearGradient id="shieldGrad" x1="6" y1="4" x2="42" y2="46">
-          <stop offset="0%" stopColor="#00B4D8" />
-          <stop offset="100%" stopColor="#0077B6" />
+        <linearGradient id="ferrumShieldGrad" x1="6" y1="4" x2="42" y2="46">
+          <stop offset="0%" stopColor="#F0A54B" />
+          <stop offset="50%" stopColor="#C06B1D" />
+          <stop offset="100%" stopColor="#8B4513" />
         </linearGradient>
-        <linearGradient id="shieldStroke" x1="6" y1="4" x2="42" y2="46">
-          <stop offset="0%" stopColor="#00D4FF" stopOpacity="0.6" />
-          <stop offset="100%" stopColor="#0077B6" stopOpacity="0.3" />
+        <linearGradient id="ferrumShieldStroke" x1="6" y1="4" x2="42" y2="46">
+          <stop offset="0%" stopColor="#FFD699" stopOpacity="0.6" />
+          <stop offset="100%" stopColor="#8B4513" stopOpacity="0.3" />
         </linearGradient>
       </defs>
     </svg>

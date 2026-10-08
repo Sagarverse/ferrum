@@ -62,7 +62,7 @@ export function Settings() {
       <div className="page-header">
         <div>
           <h1 className="page-title">Settings</h1>
-          <p className="page-subtitle">Configure Metallic Mini behavior</p>
+          <p className="page-subtitle">Configure Ferrum behavior</p>
         </div>
         <div style={{ display: 'flex', gap: 'var(--mm-2)' }}>
           <button className="btn btn-primary" onClick={handleSave} disabled={saving}>

@@ -159,7 +159,7 @@ export function HowItWorks() {
             How It Works
           </h1>
           <p className="page-subtitle">
-            Watch the real-time pipeline as Metallic Mini protects your data.
+            Watch the real-time pipeline as Ferrum protects your data.
           </p>
         </div>
         <button className="btn btn-primary" onClick={triggerBackup} disabled={isBackingUp}>

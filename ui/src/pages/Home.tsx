@@ -130,7 +130,7 @@ export function Home() {
           {msgs.length === 0 && (
             <div className="chat-welcome fade-in">
               <div className="chat-welcome-logo"><Logo size={48} /></div>
-              <h2>Metallic Mini Assistant</h2>
+              <h2>Ferrum Assistant</h2>
               <p>Ask me to protect data, check backups, or configure policies.</p>
               <div className="chat-chips">
                 {CHIPS.map(c => (
@@ -177,7 +177,7 @@ export function Home() {
             <input
               ref={inputRef}
               className="chat-input"
-              placeholder="Ask Metallic Mini..."
+              placeholder="Ask Ferrum..."
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } }}

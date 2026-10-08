@@ -117,7 +117,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
             <Logo size={28} />
           </div>
           <div className="sidebar-brand">
-            <h1>Metallic Mini</h1>
+            <h1>Ferrum</h1>
             <span>Data Protection</span>
           </div>
         </div>

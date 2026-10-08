@@ -3,7 +3,7 @@
 //! When a protected file/folder is deleted from the source:
 //! - The protected versions in repositories are preserved
 //! - The user is notified
-//! - The user must explicitly unlink in Metallic Mini to remove protection
+//! - The user must explicitly unlink in Ferrum to remove protection
 //! - Provides restore capability for deleted data
 
 use std::path::Path;

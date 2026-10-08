@@ -1,4 +1,4 @@
-//! # Metallic Mini Core Engine
+//! # Ferrum Core Engine
 //!
 //! Professional-grade data protection platform with continuous backup,
 //! versioning, ransomware defense & automated recovery.
@@ -44,7 +44,7 @@ pub mod platform;
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// Application name
-pub const APP_NAME: &str = "Metallic Mini";
+pub const APP_NAME: &str = "Ferrum";
 
 /// Default API port for the local server
 pub const DEFAULT_API_PORT: u16 = 19270;

@@ -145,7 +145,7 @@ pub async fn add_protected_item(
     state.db.add_protected_item(&item)
         .map_err(|e| err(StatusCode::INTERNAL_SERVER_ERROR, &e.to_string()))?;
 
-    // Set up a default replica pointing at ~/Library/Application Support/MetallicMini/repositories
+    // Set up a default replica pointing at ~/Library/Application Support/Ferrum/repositories
     if state.db.get_replicas().map(|r| r.is_empty()).unwrap_or(true) {
         let store_root = platform_default_repo_root();
         let _ = std::fs::create_dir_all(&store_root);
@@ -171,15 +171,15 @@ fn platform_default_repo_root() -> std::path::PathBuf {
     if cfg!(target_os = "macos") {
         dirs::data_local_dir()
             .unwrap_or_else(|| std::path::PathBuf::from("."))
-            .join("MetallicMini").join("repositories")
+            .join("Ferrum").join("repositories")
     } else if cfg!(target_os = "windows") {
         dirs::data_local_dir()
             .unwrap_or_else(|| std::path::PathBuf::from("."))
-            .join("MetallicMini").join("repositories")
+            .join("Ferrum").join("repositories")
     } else {
         dirs::data_local_dir()
             .unwrap_or_else(|| std::path::PathBuf::from("."))
-            .join("metallic-mini").join("repositories")
+            .join("ferrum").join("repositories")
     }
 }
 
@@ -556,7 +556,7 @@ pub async fn ai_chat(
     State(state): State<Arc<AppState>>,
     Json(req): Json<AiChatRequest>,
 ) -> AppResult {
-    let system_prompt = r#"You are the AI assistant for Metallic Mini, a local data protection software.
+    let system_prompt = r#"You are the AI assistant for Ferrum, a local data protection software.
 Your job is to help the user manage their backups. 
 Always respond in strict JSON format:
 {
@@ -619,7 +619,7 @@ async fn generate_fallback_response(message: &str, state: &AppState) -> String {
     } else if msg_lower.contains("version") {
         "You can browse version history on the 'Versions' page. Each version shows a timeline of changes with the ability to restore any point.".to_string()
     } else {
-        "I'm your Metallic Mini assistant. I can help you protect folders, check backup status, restore versions, and configure policies. What would you like to do?".to_string()
+        "I'm your Ferrum assistant. I can help you protect folders, check backup status, restore versions, and configure policies. What would you like to do?".to_string()
     }
 }
 

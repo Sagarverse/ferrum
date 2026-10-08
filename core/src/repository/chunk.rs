@@ -261,7 +261,7 @@ mod tests {
 
     #[test]
     fn test_chunk_small_data() {
-        let data = b"Hello, Metallic Mini!";
+        let data = b"Hello, Ferrum!";
         let chunks = chunk_data(data, &ChunkConfig::default());
         assert_eq!(chunks.len(), 1);
         assert_eq!(chunks[0].data, data);

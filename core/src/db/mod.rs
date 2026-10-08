@@ -18,7 +18,7 @@ pub struct Database {
 impl Database {
     /// Open or create the database at the given data directory
     pub fn open(data_dir: &Path) -> anyhow::Result<Self> {
-        let db_path = data_dir.join("metallic_mini.db");
+        let db_path = data_dir.join("ferrum.db");
         let conn = Connection::open(&db_path)?;
 
         // Enable WAL mode for concurrent reads

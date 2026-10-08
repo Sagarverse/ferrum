@@ -5,7 +5,7 @@ import { api } from '../utils/api';
 export function Assistant() {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<{ role: 'user' | 'ai'; content: string; tool?: string }[]>([
-    { role: 'ai', content: "Hello! I'm your Metallic Mini Assistant. I can help you protect files, list backups, or restore data. Try asking me to 'protect /path/to/folder' or 'list my files'." }
+    { role: 'ai', content: "Hello! I'm your Ferrum Assistant. I can help you protect files, list backups, or restore data. Try asking me to 'protect /path/to/folder' or 'list my files'." }
   ]);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);

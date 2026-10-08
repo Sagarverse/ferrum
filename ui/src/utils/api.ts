@@ -1,4 +1,4 @@
-/** API service — talks to the real Metallic Mini Rust backend. */
+/** API service — talks to the real Ferrum Rust backend. */
 
 const USE_IPC = typeof window !== 'undefined'
   && (window as any).metallic

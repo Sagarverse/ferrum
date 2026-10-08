@@ -1,17 +1,17 @@
 [package]
-name = "metallic-mini"
+name = "ferrum"
 version = "0.1.0"
 edition = "2021"
 description = "Professional-grade data protection platform with continuous backup, versioning, ransomware defense & automated recovery"
 license = "MIT"
-repository = "https://github.com/metallic-mini/metallic-mini"
+repository = "https://github.com/ferrum/ferrum"
 
 [[bin]]
-name = "metallic-mini"
+name = "ferrum"
 path = "src/main.rs"
 
 [lib]
-name = "metallic_mini"
+name = "ferrum"
 path = "src/lib.rs"
 
 [dependencies]

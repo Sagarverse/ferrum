@@ -213,7 +213,7 @@ export function ProtectedData() {
             Protect New Item
           </div>
           <p style={{ fontSize: 'var(--mm-text-sm)', color: 'var(--mm-text-secondary)', marginBottom: 'var(--mm-3)' }}>
-            Choose a folder or file to protect. Metallic Mini will create versioned, deduplicated backups.
+            Choose a folder or file to protect. Ferrum will create versioned, deduplicated backups.
           </p>
 
           {/* Path input */}
@@ -336,7 +336,7 @@ export function ProtectedData() {
         <div className="empty">
           <Shield size={48} />
           <h3>No protected data yet</h3>
-          <p>Click "Add Protection" to start monitoring your files and folders. Metallic Mini will create versioned backups automatically.</p>
+          <p>Click "Add Protection" to start monitoring your files and folders. Ferrum will create versioned backups automatically.</p>
         </div>
       ) : (
         <div className="card" style={{ padding: 0, overflow: 'hidden' }}>

@@ -1,4 +1,4 @@
-//! Metallic Mini Daemon
+//! Ferrum Daemon
 //!
 //! Entry point for the background protection service. Initializes all subsystems:
 //! - SQLite databases
@@ -10,7 +10,7 @@
 
 use std::sync::Arc;
 use tracing::{info, error};
-use metallic_mini::{
+use ferrum::{
     api, config, db, events, health, scheduler, security, sync, watcher,
     AppState, APP_NAME, VERSION, DEFAULT_API_PORT,
 };
@@ -21,7 +21,7 @@ async fn main() -> anyhow::Result<()> {
     tracing_subscriber::fmt()
         .with_env_filter(
             tracing_subscriber::EnvFilter::try_from_default_env()
-                .unwrap_or_else(|_| "metallic_mini=info,tower_http=info".into()),
+                .unwrap_or_else(|_| "ferrum=info,tower_http=info".into()),
         )
         .with_target(true)
         .with_thread_ids(true)
@@ -175,16 +175,16 @@ mod platform {
     pub fn get_data_dir() -> Result<PathBuf> {
         let dir = if cfg!(target_os = "macos") {
             dirs::data_local_dir()
-                .map(|d| d.join("MetallicMini"))
-                .unwrap_or_else(|| PathBuf::from("./metallic-mini-data"))
+                .map(|d| d.join("Ferrum"))
+                .unwrap_or_else(|| PathBuf::from("./ferrum-data"))
         } else if cfg!(target_os = "windows") {
             dirs::data_local_dir()
-                .map(|d| d.join("MetallicMini"))
-                .unwrap_or_else(|| PathBuf::from("C:\\ProgramData\\MetallicMini"))
+                .map(|d| d.join("Ferrum"))
+                .unwrap_or_else(|| PathBuf::from("C:\\ProgramData\\Ferrum"))
         } else {
             dirs::data_local_dir()
-                .map(|d| d.join("metallic-mini"))
-                .unwrap_or_else(|| PathBuf::from("./metallic-mini-data"))
+                .map(|d| d.join("ferrum"))
+                .unwrap_or_else(|| PathBuf::from("./ferrum-data"))
         };
         Ok(dir)
     }

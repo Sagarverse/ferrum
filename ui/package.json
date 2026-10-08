@@ -1,9 +1,9 @@
 {
-  "name": "metallic-mini",
+  "name": "ferrum",
   "version": "0.1.0",
-  "description": "Metallic Mini — Professional Data Protection Platform",
+  "description": "Ferrum — Professional Data Protection Platform",
   "main": "electron/main.js",
-  "author": "Metallic Mini",
+  "author": "Ferrum",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
@@ -15,7 +15,7 @@
   },
   "build": {
     "appId": "com.metallicmind.app",
-    "productName": "Metallic Mini",
+    "productName": "Ferrum",
     "mac": {
       "category": "public.app-category.utilities",
       "target": ["dmg"],
@@ -28,8 +28,8 @@
     },
     "extraResources": [
       {
-        "from": "../core/target/release/metallic-mini",
-        "to": "bin/metallic-mini"
+        "from": "../core/target/release/ferrum",
+        "to": "bin/ferrum"
       }
     ],
     "files": [
