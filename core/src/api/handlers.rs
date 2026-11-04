@@ -86,14 +86,19 @@ pub async fn get_metrics(State(state): State<Arc<AppState>>) -> AppResult {
     let items = state.db.get_protected_items().unwrap_or_default();
     let mut total_size = 0;
     let mut dedup_size = 0;
+    let mut seen_stores = std::collections::HashSet::new();
     
     for item in items {
         let store_root = get_item_store_root(&state, &item);
-        if let Ok(store) = crate::repository::ContentStore::open(&store_root) {
-            dedup_size += store.total_size().unwrap_or(0);
+        if seen_stores.insert(store_root.clone()) {
+            if let Ok(store) = crate::repository::ContentStore::open(&store_root) {
+                dedup_size += store.total_size().unwrap_or(0);
+            }
         }
-        if let Ok(Some(latest_version)) = state.db.get_latest_version(&item.id) {
-            total_size += latest_version.total_size;
+        if let Ok(versions) = state.db.get_versions(&item.id) {
+            for v in versions {
+                total_size += v.total_size;
+            }
         }
     }
 

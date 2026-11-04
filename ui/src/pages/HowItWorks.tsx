@@ -3,6 +3,7 @@
 // clear stages and live event streaming.
 
 import { useEffect, useMemo, useState } from 'react';
+import { useBrand } from '../context/BrandContext';
 import {
   Eye, Scissors, Hash, Layers, Lock, Save, Copy, GitCommit,
   Play, RotateCcw, CheckCircle2, Loader2, Zap, Activity,
@@ -52,6 +53,7 @@ const STAGES: Stage[] = [
 type StageState = 'idle' | 'active' | 'done';
 
 export function HowItWorks() {
+  const { brandName } = useBrand();
   const [stageStates, setStageStates] = useState<Record<string, StageState>>(
     () => Object.fromEntries(STAGES.map(s => [s.id, 'idle']))
   );
@@ -159,7 +161,7 @@ export function HowItWorks() {
             How It Works
           </h1>
           <p className="page-subtitle">
-            Watch the real-time pipeline as Ferrum protects your data.
+            Watch the real-time pipeline as {brandName} protects your data.
           </p>
         </div>
         <button className="btn btn-primary" onClick={triggerBackup} disabled={isBackingUp}>

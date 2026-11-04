@@ -8,6 +8,8 @@ import {
 } from 'lucide-react';
 import { api } from '../../utils/api';
 
+import { useBrand } from '../../context/BrandContext';
+
 interface SidebarProps {
   currentPage: PageId;
   onNavigate: (page: PageId) => void;
@@ -46,6 +48,7 @@ const NAV = [
 ];
 
 export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
+  const { brandName } = useBrand();
   const [online, setOnline] = useState(false);
   const [threatLevel, setThreatLevel] = useState('unknown');
   const [activeIncidents, setActiveIncidents] = useState(0);
@@ -117,7 +120,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
             <Logo size={28} />
           </div>
           <div className="sidebar-brand">
-            <h1>Ferrum</h1>
+            <h1>{brandName}</h1>
             <span>Data Protection</span>
           </div>
         </div>

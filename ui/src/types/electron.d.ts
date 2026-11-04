@@ -4,6 +4,7 @@ interface FerrumBridge {
   selectFile: () => Promise<string | null>;
   getPlatform: () => Promise<string>;
   openDataDir: () => Promise<void>;
+  openPath?: (path: string) => Promise<void>;
   api: (method: string, path: string, body?: any) => Promise<any>;
   subscribeEvents: (options?: any) => Promise<() => void>;
 }

@@ -6,8 +6,10 @@ import {
   Upload, Zap, Lock, Archive, FolderOpen, X
 } from 'lucide-react';
 import { api, formatBytes, timeAgo, type ProtectedItem } from '../utils/api';
+import { useBrand } from '../context/BrandContext';
 
 export function ProtectedData() {
+  const { brandName } = useBrand();
   const [items, setItems] = useState<ProtectedItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -215,7 +217,7 @@ export function ProtectedData() {
             Protect New Item
           </div>
           <p style={{ fontSize: 'var(--mm-text-sm)', color: 'var(--mm-text-secondary)', marginBottom: 'var(--mm-3)' }}>
-            Choose a folder or file to protect. Ferrum will create versioned, deduplicated backups.
+            Choose a folder or file to protect. {brandName} will create versioned, deduplicated backups.
           </p>
 
           {/* Path input */}
@@ -338,7 +340,7 @@ export function ProtectedData() {
         <div className="empty">
           <Shield size={48} />
           <h3>No protected data yet</h3>
-          <p>Click "Add Protection" to start monitoring your files and folders. Ferrum will create versioned backups automatically.</p>
+          <p>Click "Add Protection" to start monitoring your files and folders. {brandName} will create versioned backups automatically.</p>
         </div>
       ) : (
         <div className="card" style={{ padding: 0, overflow: 'hidden' }}>

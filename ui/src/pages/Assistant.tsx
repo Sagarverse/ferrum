@@ -2,10 +2,13 @@ import { useState, useRef, useEffect } from 'react';
 import { Bot, User, Send, Shield, Loader2, Sparkles, Folder, Trash2 } from 'lucide-react';
 import { api } from '../utils/api';
 
+import { useBrand } from '../context/BrandContext';
+
 export function Assistant() {
+  const { brandName } = useBrand();
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<{ role: 'user' | 'ai'; content: string; tool?: string }[]>([
-    { role: 'ai', content: "Hello! I'm your Ferrum Assistant. I can help you protect files, list backups, or restore data. Try asking me to 'protect /path/to/folder' or 'list my files'." }
+    { role: 'ai', content: `Hello! I'm your ${brandName} Assistant. I can help you protect files, list backups, or restore data. Try asking me to 'protect /path/to/folder' or 'list my files'.` }
   ]);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);

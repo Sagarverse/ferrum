@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { HardDrive, CheckCircle2, AlertCircle, Plus, Trash2, Loader2 } from 'lucide-react';
 import { api, formatBytes, type ReplicaRecord } from '../utils/api';
+import { useBrand } from '../context/BrandContext';
 
 export function Storage() {
+  const { brandName } = useBrand();
   const [repos, setRepos] = useState<ReplicaRecord[]>([]);
   const [metrics, setMetrics] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -129,7 +131,7 @@ export function Storage() {
         <div className="empty">
           <HardDrive size={48} />
           <h3>No repositories configured</h3>
-          <p>Add an external SSD or drive as a backup repository. Ferrum will sync protected data automatically.</p>
+          <p>Add an external SSD or drive as a backup repository. {brandName} will sync protected data automatically.</p>
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--mm-3)' }}>

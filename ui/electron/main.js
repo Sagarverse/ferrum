@@ -252,6 +252,12 @@ ipcMain.handle('open-data-dir', async () => {
   return dataDir;
 });
 
+ipcMain.handle('open-path', async (_evt, targetPath) => {
+  if (targetPath) {
+    shell.openPath(targetPath);
+  }
+});
+
 // Generic API bridge — fetches from the local Rust daemon and returns parsed JSON.
 // The renderer calls window.metallic.api(method, path, body) where path is "/foo" —
 // we prepend the /api prefix the daemon expects.

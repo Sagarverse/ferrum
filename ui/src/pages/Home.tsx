@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Logo } from '../components/Logo';
+import { useBrand } from '../context/BrandContext';
 import {
   Shield, HardDrive, Clock, Database, Send, FolderPlus,
   HeartPulse, RotateCcw, FileSearch, ShieldCheck, Zap, Activity,
@@ -22,6 +23,7 @@ const CHIPS = [
 ];
 
 export function Home() {
+  const { brandName } = useBrand();
   const [msgs, setMsgs] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -130,7 +132,7 @@ export function Home() {
           {msgs.length === 0 && (
             <div className="chat-welcome fade-in">
               <div className="chat-welcome-logo"><Logo size={48} /></div>
-              <h2>Ferrum Assistant</h2>
+              <h2>{brandName} Assistant</h2>
               <p>Ask me to protect data, check backups, or configure policies.</p>
               <div className="chat-chips">
                 {CHIPS.map(c => (
@@ -177,7 +179,7 @@ export function Home() {
             <input
               ref={inputRef}
               className="chat-input"
-              placeholder="Ask Ferrum..."
+              placeholder={`Ask ${brandName}...`}
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } }}

@@ -168,29 +168,32 @@ impl SnapshotEngine {
         let mut deduplicated = false;
 
         for chunk in &chunks {
-            // Check deduplication
-            if self.dedup.check_and_ref(&chunk.hash)? {
-                // Chunk already exists, just add reference
-                chunk_hashes.push(chunk.hash.clone());
+            let exists_in_store = self.store.has_chunk(&chunk.hash);
+            let is_dedup = self.dedup.check_and_ref(&chunk.hash)?;
+
+            if is_dedup {
                 deduplicated = true;
-                continue;
             }
 
-            // Compress the chunk
-            let compressed = compress(&chunk.data, &self.compression)?;
+            if !exists_in_store {
+                // Compress the chunk
+                let compressed = compress(&chunk.data, &self.compression)?;
 
-            // Store the compressed chunk
-            self.store.put_chunk(&chunk.hash, &compressed)?;
+                // Store the compressed chunk on disk
+                self.store.put_chunk(&chunk.hash, &compressed)?;
 
-            // Record in database
-            self.dedup.record_chunk(
-                &chunk.hash,
-                chunk.size,
-                compressed.len() as u64,
-            )?;
+                // Record in database if brand new
+                if !is_dedup {
+                    self.dedup.record_chunk(
+                        &chunk.hash,
+                        chunk.size,
+                        compressed.len() as u64,
+                    )?;
+                    new_chunks += 1;
+                }
+            }
 
             chunk_hashes.push(chunk.hash.clone());
-            new_chunks += 1;
         }
 
         let modified_at = metadata.modified()

@@ -62,9 +62,12 @@ export function Recovery() {
     setResult(null);
     try {
       const res = await api.restore(selectedItem, selectedVersion, dest);
+      if (res?.errors && res.errors.length > 0) {
+        setError(`Restore warning: ${res.errors.join('; ')}`);
+      }
       setResult({
         version: selectedVersion,
-        destination: dest,
+        destination: res?.destination || dest,
         files: res?.files_restored ?? 0,
       });
     } catch (e: any) {
@@ -233,19 +236,33 @@ export function Recovery() {
           {result && (
             <div className="fade-in" style={{
               marginTop: 'var(--mm-3)', padding: 'var(--mm-3)',
-              border: '1px solid var(--mm-green)',
-              background: 'var(--mm-green-bg)',
+              border: result.files > 0 ? '1px solid var(--mm-green)' : '1px solid var(--mm-amber, #f59e0b)',
+              background: result.files > 0 ? 'var(--mm-green-bg)' : 'rgba(245, 158, 11, 0.1)',
               borderRadius: 8,
-              display: 'flex', gap: 'var(--mm-3)', alignItems: 'flex-start',
+              display: 'flex', gap: 'var(--mm-3)', alignItems: 'center', justifyContent: 'space-between'
             }}>
-              <CheckCircle2 size={20} color="var(--mm-green)" style={{ flexShrink: 0, marginTop: 2 }} />
-              <div>
-                <div style={{ fontWeight: 600, color: 'var(--mm-green)' }}>Restore completed!</div>
-                <div style={{ fontSize: 'var(--mm-text-sm)', color: 'var(--mm-text-secondary)', marginTop: 4 }}>
-                  Version {result.version} → <code>{result.destination}</code>
-                  {result.files > 0 && ` · ${result.files} files restored`}
+              <div style={{ display: 'flex', gap: 'var(--mm-3)', alignItems: 'center' }}>
+                <CheckCircle2 size={20} color={result.files > 0 ? 'var(--mm-green)' : '#f59e0b'} style={{ flexShrink: 0 }} />
+                <div>
+                  <div style={{ fontWeight: 600, color: result.files > 0 ? 'var(--mm-green)' : '#f59e0b' }}>
+                    {result.files > 0 ? 'Restore completed!' : 'Restore completed with warnings'}
+                  </div>
+                  <div style={{ fontSize: 'var(--mm-text-sm)', color: 'var(--mm-text-secondary)', marginTop: 2 }}>
+                    Version {result.version} → <code>{result.destination}</code>
+                    {result.files > 0 && ` · ${result.files} file${result.files > 1 ? 's' : ''} restored`}
+                  </div>
                 </div>
               </div>
+
+              {(window.ferrum?.openPath || window.metallic?.openPath) && (
+                <button
+                  className="btn btn-secondary"
+                  style={{ fontSize: 'var(--mm-text-xs)', padding: '4px 10px', display: 'flex', alignItems: 'center', gap: 4 }}
+                  onClick={() => (window.ferrum || window.metallic)?.openPath?.(result.destination)}
+                >
+                  <FolderOpen size={13} /> Open Location
+                </button>
+              )}
             </div>
           )}
 

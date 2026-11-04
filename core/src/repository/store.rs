@@ -84,16 +84,36 @@ impl ContentStore {
         Ok(true)
     }
 
-    /// Retrieve a chunk by its hash
+    /// Retrieve a chunk by its hash (with self-healing cross-repo fallback)
     pub fn get_chunk(&self, hash: &str) -> Result<Vec<u8>, StoreError> {
         let path = self.chunk_path(hash);
 
-        if !path.exists() {
-            return Err(StoreError::ChunkNotFound(hash.to_string()));
+        if path.exists() {
+            let data = std::fs::read(&path)?;
+            return Ok(data);
         }
 
-        let data = std::fs::read(&path)?;
-        Ok(data)
+        // Self-healing fallback: Search sibling repositories in parent directory
+        if let Some(parent_dir) = self.root.parent() {
+            if parent_dir.exists() {
+                let (prefix1, rest) = hash.split_at(2.min(hash.len()));
+                let (prefix2, _) = rest.split_at(2.min(rest.len()));
+
+                if let Ok(entries) = std::fs::read_dir(parent_dir) {
+                    for entry in entries.flatten() {
+                        let candidate = entry.path().join("chunks").join(prefix1).join(prefix2).join(hash);
+                        if candidate.exists() {
+                            if let Ok(data) = std::fs::read(&candidate) {
+                                let _ = self.put_chunk(hash, &data);
+                                return Ok(data);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Err(StoreError::ChunkNotFound(hash.to_string()))
     }
 
     /// Verify a chunk's integrity

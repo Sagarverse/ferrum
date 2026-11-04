@@ -5,6 +5,7 @@ const bridge = {
   selectFile: () => ipcRenderer.invoke('select-file'),
   getPlatform: () => ipcRenderer.invoke('get-platform'),
   openDataDir: () => ipcRenderer.invoke('open-data-dir'),
+  openPath: (p) => ipcRenderer.invoke('open-path', p),
   // Forward arbitrary API calls to the Rust daemon over IPC.
   // This is more reliable than fetch() from the sandboxed renderer.
   api: (method, path, body) => ipcRenderer.invoke('api-call', { method, path, body }),

@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import {
-  Shield, Bell, Cpu, Database, Brain, Lock, Save, RotateCcw, Check, Loader2
+  Shield, Bell, Cpu, Database, Brain, Lock, Save, RotateCcw, Check, Loader2, Sparkles
 } from 'lucide-react';
 import { api } from '../utils/api';
+import { useBrand, BrandName } from '../context/BrandContext';
 
 export function Settings() {
+  const { brandName, setBrandName } = useBrand();
   const [settings, setSettings] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -62,7 +64,7 @@ export function Settings() {
       <div className="page-header">
         <div>
           <h1 className="page-title">Settings</h1>
-          <p className="page-subtitle">Configure Ferrum behavior</p>
+          <p className="page-subtitle">Configure {brandName} behavior</p>
         </div>
         <div style={{ display: 'flex', gap: 'var(--mm-2)' }}>
           <button className="btn btn-primary" onClick={handleSave} disabled={saving}>
@@ -70,6 +72,16 @@ export function Settings() {
           </button>
         </div>
       </div>
+
+      <Group icon={Sparkles} title="Branding & Identity">
+        <Select
+          label="Software Name"
+          desc="Choose your preferred brand title for the application"
+          value={brandName}
+          options={[['Ferrum', 'Ferrum'], ['Metallic Mini', 'Metallic Mini']]}
+          set={v => setBrandName(v as BrandName)}
+        />
+      </Group>
 
       <Group icon={Shield} title="Protection">
         <Toggle label="Start on system boot" desc="Launch daemon automatically" on={settings.auto_start} set={v => update('auto_start', v)} />

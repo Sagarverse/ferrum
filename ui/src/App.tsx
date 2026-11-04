@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { BrandProvider } from './context/BrandContext';
 import { Sidebar } from './components/layout/Sidebar';
 import { Home } from './pages/Home';
 import { ProtectedData } from './pages/ProtectedData';
@@ -52,13 +53,15 @@ export default function App() {
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar currentPage={page} onNavigate={setPage} />
-      <main className="main-content">
-        <div className="page-content">
-          {pages[page] || <Home />}
-        </div>
-      </main>
-    </div>
+    <BrandProvider>
+      <div className="app-layout">
+        <Sidebar currentPage={page} onNavigate={setPage} />
+        <main className="main-content">
+          <div className="page-content">
+            {pages[page] || <Home />}
+          </div>
+        </main>
+      </div>
+    </BrandProvider>
   );
 }
